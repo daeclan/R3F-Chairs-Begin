@@ -1,9 +1,9 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useRef } from "react";
 import "./App.scss";
 //Components
 import Header from "./components/header";
 import { Section } from "./components/section";
-import { Canvas } from "react-three-fiber";
+import { Canvas, useFrame } from "react-three-fiber";
 import { Html, useGLTFLoader } from 'drei'
 
 const Model = () => {
@@ -23,10 +23,14 @@ const Lights = () => {
 }
 
 const HTMLContent = () => {
+
+  const ref = useRef()
+  useFrame(() => (ref.current.rotation.y += 0.01))
+
   return (
     <Section factor={1.5} offset={0}>
       <group position={[0, 0, 0]}>
-        <mesh position={[0, -3.14, 0]} scale={[0.1, 0.1, 0.1]}>
+        <mesh ref={ref} position={[0, -3.14, 0]} scale={[0.1, 0.1, 0.1]}>
           <Model />
         </mesh>
         <Html fullscreen>
