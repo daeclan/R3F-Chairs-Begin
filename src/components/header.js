@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header>
       <div className='header-inner'>
-        <div className='logo'>CHAIR.</div>
+        <div className='logo'>MONEY ZAP</div>
         <nav>
           <ul>
             <li>
@@ -17,10 +17,10 @@ export default function Header() {
               <a href='/'>solutions</a>
             </li>
             <li>
-              <a href='/'>reach</a>
+              <a href='/'>contact</a>
             </li>
             <li className='btn'>
-              <a href='/'>order</a>
+              <a href='/'>sign up now</a>
             </li>
           </ul>
         </nav>

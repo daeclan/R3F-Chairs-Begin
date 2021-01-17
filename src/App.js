@@ -43,7 +43,7 @@ const HTMLContent = ({ bgColor, domContent, children, modelPath, positionY }) =>
     <Section factor={1.5} offset={0}>
       <group position={[0, positionY, 0]}>
         {console.log(positionY)}
-        <mesh ref={ref} position={[0, -3.14, 0]} scale={[0.1, 0.1, 0.1]}>
+        <mesh ref={ref} position={[0, -3.14, 0]} scale={[1, 1, 1]}>
           <Model modelPath={modelPath} />
         </mesh>
         <Html portal={domContent} fullscreen>
@@ -72,29 +72,29 @@ export default function App() {
         <Suspense fallback={null}>
           <HTMLContent
             domContent={domContent}
-            modelPath="/armchairYellow.gltf"
+            modelPath="/lightning_bolt.gltf"
             positionY={0}
             bgColor={'#f15946'}>
             <h1 className="title">
-              Hi
+              ZAP X Technology
             </h1>
           </HTMLContent>
           <HTMLContent
             domContent={domContent}
-            modelPath="/armchairGreen.gltf"
+            modelPath="/lightning_bolt2.gltf"
             positionY={-21}
             bgColor={'#571ec1'}>
             <h1 className="title">
-              Why Hello
+              Success Stories
             </h1>
           </HTMLContent>
           <HTMLContent
             domContent={domContent}
-            modelPath="/armchairGray.gltf"
+            modelPath="/lightning_bolt3.gltf"
             positionY={-42}
             bgColor={'#636567'}>
             <h1 className="title">
-              Hi dare
+              Sign Up Today
             </h1>
           </HTMLContent>
         </Suspense>
