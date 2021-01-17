@@ -1,11 +1,16 @@
 import React, { Suspense, useEffect, useRef } from "react";
 import "./App.scss";
-//Components
+// components
 import Header from "./components/header";
 import { Section } from "./components/section";
 import { Canvas, useFrame } from "react-three-fiber";
 import { Html, useGLTFLoader } from 'drei'
+
+// page states 
 import state from "./components/state"
+
+// intersection observer
+import { useInView } from 'react-intersection-observer'
 
 const Model = ({ modelPath }) => {
   const gltf = useGLTFLoader(modelPath, true)
@@ -23,11 +28,17 @@ const Lights = () => {
   )
 }
 
-const HTMLContent = ({ domContent, children, modelPath, positionY }) => {
+const HTMLContent = ({ bgColor, domContent, children, modelPath, positionY }) => {
 
   const ref = useRef()
   useFrame(() => (ref.current.rotation.y += 0.01))
+  const [refItem, inView] = useInView({
+    threshold: 0
+  })
 
+  useEffect(() => {
+    inView && (document.body.style.background = bgColor)
+  }, [inView])
   return (
     <Section factor={1.5} offset={0}>
       <group position={[0, positionY, 0]}>
@@ -37,7 +48,9 @@ const HTMLContent = ({ domContent, children, modelPath, positionY }) => {
         </mesh>
         <Html portal={domContent} fullscreen>
           <div className="container">
-            {children}
+            <div ref={refItem}>
+              {children}
+            </div>
           </div>
         </Html>
       </group>
@@ -57,32 +70,38 @@ export default function App() {
       <Canvas colorManagement camera={{ position: [0, 0, 10], fov: 70 }}>
         <Lights />
         <Suspense fallback={null}>
-          <HTMLContent domContent={domContent} modelPath="/armchairYellow.gltf" positionY={0}>
-            <div className="container">
-              <h1 className="title">
-                Hi
+          <HTMLContent
+            domContent={domContent}
+            modelPath="/armchairYellow.gltf"
+            positionY={0}
+            bgColor={'#f15946'}>
+            <h1 className="title">
+              Hi
             </h1>
-            </div>
           </HTMLContent>
-          <HTMLContent domContent={domContent} modelPath="/armchairGreen.gltf" positionY={-21}>
-            <div className="container">
-              <h1 className="title">
-                Why Hello
+          <HTMLContent
+            domContent={domContent}
+            modelPath="/armchairGreen.gltf"
+            positionY={-21}
+            bgColor={'#571ec1'}>
+            <h1 className="title">
+              Why Hello
             </h1>
-            </div>
           </HTMLContent>
-          <HTMLContent domContent={domContent} modelPath="/armchairGray.gltf" positionY={-42}>
-            <div className="container">
-              <h1 className="title">
-                Hi dare
+          <HTMLContent
+            domContent={domContent}
+            modelPath="/armchairGray.gltf"
+            positionY={-42}
+            bgColor={'#636567'}>
+            <h1 className="title">
+              Hi dare
             </h1>
-            </div>
           </HTMLContent>
         </Suspense>
       </Canvas>
       <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
         <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
-        <div style={{ height: `${state.pages * 100}vh` }}></div>
+        <div style={{ height: `${state.sections * 100}vh` }}></div>
       </div>
     </>
   );
